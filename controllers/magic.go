@@ -35,7 +35,7 @@ func (this *MagicController) Get() {
 			}
 			println("Channel destination:", channel)
 			data, _ := json.Marshal(wh)
-			http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewBuffer(data))
+			http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewBuffer(data))
 			println("Done")
 		}
 	}
