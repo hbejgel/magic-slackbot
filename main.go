@@ -1,16 +1,16 @@
 package main
 
 import (
-	_ "github.com/hbejgel/magic-slackbot/docs"
-	_ "github.com/hbejgel/magic-slackbot/routers"
-
 	"github.com/astaxie/beego"
+	_ "github.com/hbejgel/magic-slackbot/routers"
+	"os"
+	"strconv"
 )
 
 func main() {
-	if beego.RunMode == "dev" {
-		beego.DirectoryIndex = true
-		beego.StaticDir["/swagger"] = "swagger"
+	port, err := strconv.Atoi(os.Getenv("PORT"))
+	if err == nil {
+		beego.HttpPort = port
 	}
 	beego.Run()
 }
