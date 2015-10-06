@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"errors"
 	"io/ioutil"
+	"math/rand"
 	"net/http"
 	"net/url"
 )
@@ -14,7 +15,7 @@ const (
 
 type CardsResponse struct {
 	Queries []Query           `json:"query"`
-	Cards   []*Card           `json:"cards"`
+	Cards   []Card            `json:"cards"`
 	Total   int               `json:"total"`
 	PerPage int               `json:"perPage"`
 	Links   map[string]string `json:"links"`
@@ -60,4 +61,12 @@ func GeneralCardGetter(query string) (CardsResponse, error) {
 	json.Unmarshal(body, &response)
 
 	return response, nil
+}
+
+func (this CardsResponse) GetRandomCard() Card {
+	total_cards := len(this.Cards)
+	if total_cards == 0 {
+		return Card{}
+	}
+	return this.Cards[rand.Intn(total_cards)]
 }

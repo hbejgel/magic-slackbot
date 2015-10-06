@@ -17,12 +17,12 @@ type MagicController struct {
 // @Failure 404 card not found
 // @router /magic [get]
 func (this *MagicController) Post() {
-	query := this.Ctx.Request.URL.RawQuery
-	cards, err := models.GeneralCardGetter(query)
+	card_name := this.Input().Get("text")
+	cards, err := models.GeneralCardGetter("name=" + card_name)
 	if err != nil {
 		this.Data["json"] = err
 	} else {
-		this.Data["json"] = cards
+		this.Data["json"] = cards.GetRandomCard()
 	}
 	this.ServeJson()
 }
