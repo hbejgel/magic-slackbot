@@ -16,13 +16,13 @@ type MagicController struct {
 // @Success 200 card
 // @Failure 404 card not found
 // @router /magic [get]
-func (this *MagicController) Post() {
+func (this *MagicController) Get() {
 	card_name := this.Input().Get("text")
 	cards, err := models.GeneralCardGetter("name=" + card_name)
 	if err != nil {
 		this.Data["json"] = err
 	} else {
-		this.Data["json"] = cards.GetRandomCard()
+		this.Ctx.ResponseWriter.Write([]byte(cards.GetRandomCardImage()))
+		//this.Data["json"] = cards.GetRandomCardImage()
 	}
-	this.ServeJson()
 }

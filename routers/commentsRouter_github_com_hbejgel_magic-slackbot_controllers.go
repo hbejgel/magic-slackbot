@@ -8,7 +8,7 @@ func init() {
 
 	beego.GlobalControllerRouter["github.com/hbejgel/magic-slackbot/controllers:MagicController"] = append(beego.GlobalControllerRouter["github.com/hbejgel/magic-slackbot/controllers:MagicController"],
 		beego.ControllerComments{
-			"Post",
+			"Get",
 			`/magic`,
 			[]string{"get"},
 			nil})

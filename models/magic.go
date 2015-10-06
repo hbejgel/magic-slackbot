@@ -63,10 +63,14 @@ func GeneralCardGetter(query string) (CardsResponse, error) {
 	return response, nil
 }
 
-func (this CardsResponse) GetRandomCard() Card {
+func (this CardsResponse) GetRandomCardImage() string {
 	total_cards := len(this.Cards)
 	if total_cards == 0 {
-		return Card{}
+		return "Not found"
 	}
-	return this.Cards[rand.Intn(total_cards)]
+	image_link, ok := this.Cards[rand.Intn(total_cards)].Images["gatherer"]
+	if ok {
+		return image_link
+	}
+	return "No image"
 }
