@@ -2,6 +2,7 @@ package controllers
 
 import (
 	//"encoding/json"
+	//"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/hbejgel/magic-slackbot/models"
 )
@@ -22,7 +23,13 @@ func (this *MagicController) Get() {
 	if err != nil {
 		this.Data["json"] = err
 	} else {
-		this.Ctx.ResponseWriter.Write([]byte(cards.GetRandomCardImage()))
-		//this.Data["json"] = cards.GetRandomCardImage()
+		attachment, err := cards.GetRandomCardImage()
+		if err != nil {
+			this.Data["json"] = err
+		} else {
+			println(attachment.Att[0].Image)
+			this.Data["json"] = attachment
+		}
 	}
+	this.ServeJson()
 }

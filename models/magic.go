@@ -35,8 +35,14 @@ type Card struct {
 	Name   string            `json:"name"`
 }
 
-func GetByName(name string) {
+type Attachments struct {
+	Att []Attachment `json:"attachments"`
+}
 
+type Attachment struct {
+	Fallback string `json:"fallback"`
+	Title    string `json:"title"`
+	Image    string `json:"image_url"`
 }
 
 func GeneralCardGetter(query string) (CardsResponse, error) {
@@ -63,14 +69,20 @@ func GeneralCardGetter(query string) (CardsResponse, error) {
 	return response, nil
 }
 
-func (this CardsResponse) GetRandomCardImage() string {
+func (this CardsResponse) GetRandomCardImage() (Attachments, error) {
 	total_cards := len(this.Cards)
 	if total_cards == 0 {
-		return "Not found"
+		return Attachments{}, errors.New("Not found")
 	}
 	image_link, ok := this.Cards[rand.Intn(total_cards)].Images["gatherer"]
 	if ok {
-		return image_link
+		var atts Attachments
+		attachment := Attachment{}
+		attachment.Fallback = "Magic Images!"
+		attachment.Image = image_link
+		attachment.Title = "Magic Bot!"
+		atts.Att = append(atts.Att, attachment)
+		return atts, nil
 	}
-	return "No image"
+	return Attachments{}, errors.New("No Image")
 }
