@@ -2,9 +2,11 @@ package controllers
 
 import (
 	//"encoding/json"
-	//"encoding/json"
+	"bytes"
+	"encoding/json"
 	"github.com/astaxie/beego"
 	"github.com/hbejgel/magic-slackbot/models"
+	"net/http"
 )
 
 // Operations about magic cards
@@ -28,8 +30,9 @@ func (this *MagicController) Get() {
 			this.Data["json"] = err
 		} else {
 			println(attachment.Att[0].Image)
-			this.Data["json"] = attachment
+			data, _ := json.Marshal(attachment)
+			http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewBuffer(data))
+			println("Done")
 		}
 	}
-	this.ServeJson()
 }
