@@ -35,8 +35,9 @@ type Card struct {
 	Name   string            `json:"name"`
 }
 
-type Attachments struct {
-	Att []Attachment `json:"attachments"`
+type WebHook struct {
+	Channel     string       `json:"channel,omitempty"`
+	Attachments []Attachment `json:"attachments"`
 }
 
 type Attachment struct {
@@ -69,20 +70,20 @@ func GeneralCardGetter(query string) (CardsResponse, error) {
 	return response, nil
 }
 
-func (this CardsResponse) GetRandomCardImage() (Attachments, error) {
+func (this CardsResponse) GetRandomCardImage() (WebHook, error) {
 	total_cards := len(this.Cards)
 	if total_cards == 0 {
-		return Attachments{}, errors.New("Not found")
+		return WebHook{}, errors.New("Not found")
 	}
 	image_link, ok := this.Cards[rand.Intn(total_cards)].Images["gatherer"]
 	if ok {
-		var atts Attachments
+		var wh WebHook
 		attachment := Attachment{}
 		attachment.Fallback = "Magic Images!"
 		attachment.Image = image_link
 		attachment.Title = "Magic Bot!"
-		atts.Att = append(atts.Att, attachment)
-		return atts, nil
+		wh.Attachments = append(wh.Attachments, attachment)
+		return wh, nil
 	}
-	return Attachments{}, errors.New("No Image")
+	return WebHook{}, errors.New("No Image")
 }

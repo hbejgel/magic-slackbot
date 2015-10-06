@@ -25,12 +25,16 @@ func (this *MagicController) Get() {
 	if err != nil {
 		this.Data["json"] = err
 	} else {
-		attachment, err := cards.GetRandomCardImage()
+		wh, err := cards.GetRandomCardImage()
 		if err != nil {
 			this.Data["json"] = err
 		} else {
-			println(attachment.Att[0].Image)
-			data, _ := json.Marshal(attachment)
+			channel := this.Input().Get("channel_id")
+			if channel != "" {
+				wh.Channel = channel
+			}
+			println("Channel destination:", channel)
+			data, _ := json.Marshal(wh)
 			http.Post("https://hooks.slack.com/services/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", "application/json", bytes.NewBuffer(data))
 			println("Done")
 		}
