@@ -8,23 +8,14 @@
 package routers
 
 import (
-	"github.com/hbejgel/magic-slackbot/controllers"
-
 	"github.com/astaxie/beego"
+	"github.com/astaxie/beego/context"
+	"github.com/hbejgel/magic-slackbot/controllers"
 )
 
 func init() {
-	ns := beego.NewNamespace("/v1",
-		beego.NSNamespace("/object",
-			beego.NSInclude(
-				&controllers.ObjectController{},
-			),
-		),
-		beego.NSNamespace("/user",
-			beego.NSInclude(
-				&controllers.UserController{},
-			),
-		),
-	)
-	beego.AddNamespace(ns)
+	beego.Get("/meta/healthcheck", func(ctx *context.Context) {
+		ctx.ResponseWriter.WriteHeader(200)
+	})
+	beego.Include(&controllers.MagicController{})
 }

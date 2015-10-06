@@ -1,0 +1,11 @@
+{
+	"ImportPath": "github.com/hbejgel/magic-slackbot",
+	"GoVersion": "go1.5.1",
+	"Deps": [
+		{
+			"ImportPath": "github.com/astaxie/beego",
+			"Comment": "v1.5.0-3-ga89f14d",
+			"Rev": "a89f14d80dab442927bdc11d641aa1250ab8ad71"
+		}
+	]
+}
