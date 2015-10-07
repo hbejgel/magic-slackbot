@@ -29,6 +29,7 @@ func SendImage(image string, info url.Values) {
 		return
 	}
 	var wh WebHook
+	wh.Channel = channel
 	attachment := Attachment{}
 	attachment.Fallback = "Magic Images!"
 	attachment.Image = image
