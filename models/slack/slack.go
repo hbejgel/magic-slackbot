@@ -20,7 +20,8 @@ type Attachment struct {
 }
 
 const (
-	baseUrl = "https://hooks.slack.com/services/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"
+	zuerinhaUrl   = "https://hooks.slack.com/services/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"
+	recurrenceUrl = "https://hooks.slack.com/services/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"
 )
 
 func SendImage(image string, info url.Values) {
@@ -38,5 +39,5 @@ func SendImage(image string, info url.Values) {
 	wh.Attachments = append(wh.Attachments, attachment)
 	println("Channel destination:", channel)
 	data, _ := json.Marshal(wh)
-	http.Post(baseUrl, "application/json", bytes.NewBuffer(data))
+	http.Post(zuerinhaUrl, "application/json", bytes.NewBuffer(data))
 }
